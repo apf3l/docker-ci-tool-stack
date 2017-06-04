@@ -1,24 +1,24 @@
-def githubApi = new URL("https://api.github.com/users/marcelbirkner/repos")
+def githubApi = new URL("https://api.github.com/users/apf3l/repos")
 def projects = new groovy.json.JsonSlurper().parse(githubApi.newReader())
 
 projects.each {
-  def jobName=it.name
-  def githubName=it.full_name
-  def gitUrl=it.ssh_url
-  println "Creating Job ${jobName} for ${gitUrl}"
+    def jobName=it.name
+    def githubName=it.full_name
+    def gitUrl=it.ssh_url
+    println "Creating Job ${jobName} for ${gitUrl}"
 
-  job("GitHub-${jobName}") {
-    logRotator(-1, 10)
-    scm {
-        github(githubName, 'master')
+    job("GitHub-${jobName}") {
+        logRotator(-1, 10)
+        scm {
+            github(githubName, 'master')
+        }
+        triggers {
+            githubPush()
+        }
     }
-    triggers {
-        githubPush()
-    }
-  }
 }
 
-listView('MB GitHub Jobs') {
+listView('PK GitHub Jobs') {
     description('')
     filterBuildQueue()
     filterExecutors()
