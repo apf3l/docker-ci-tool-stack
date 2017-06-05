@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 if [ "${1:0:1}" != '-' ]; then
@@ -12,3 +12,4 @@ exec java -jar lib/sonar-application-$SONAR_VERSION.jar \
   -Dsonar.jdbc.url="$SONARQUBE_JDBC_URL" \
   -Dsonar.web.javaAdditionalOpts="-Djava.security.egd=file:/dev/./urandom" \
 	"$@"
+
